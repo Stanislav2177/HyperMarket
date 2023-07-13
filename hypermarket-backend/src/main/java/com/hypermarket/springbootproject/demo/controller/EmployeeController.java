@@ -40,7 +40,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PostMapping
+    @PostMapping("/post")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         Employee createdEmployee = employeeService.saveEmployee(employee.getEmployeeName(), employee.getPosition(), employee.getContact());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
