@@ -1,5 +1,7 @@
 package com.hypermarket.springbootproject.demo.controller;
 
+import com.hypermarket.springbootproject.demo.entity.Department;
+import com.hypermarket.springbootproject.demo.entity.Employee;
 import com.hypermarket.springbootproject.demo.entity.Manager;
 import com.hypermarket.springbootproject.demo.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,19 @@ public class ManagerController {
     public ResponseEntity<Void> deleteManager(@PathVariable int managerId) {
         managerService.deleteManager(managerId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/employees/{managerId}")
+    public ResponseEntity<List<Employee>> getEmployeesForSpecificManager(@PathVariable int managerId){
+        List<Employee> allEmployees = managerService.getAllEmployees(managerId);
+        return ResponseEntity.ok(allEmployees);
+    }
+
+    @GetMapping("/department/{managerId}")
+    public ResponseEntity<Department> getManagerDepartment(@PathVariable int managerId){
+        Department managerByDepartmentId = managerService.getManagerByDepartmentId(managerId);
+
+        return ResponseEntity.ok(managerByDepartmentId);
     }
 
 }

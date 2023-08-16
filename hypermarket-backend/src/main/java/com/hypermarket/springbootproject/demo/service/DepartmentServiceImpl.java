@@ -51,7 +51,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 
     @Override
-    public Department updateDepartment(int departmentId, Department updatedDepartment) {
+    public Department updateDepartment(Department updatedDepartment, int departmentId) {
         Department existingDepartment = null;
         try {
             existingDepartment = departmentRepository.findById(departmentId)

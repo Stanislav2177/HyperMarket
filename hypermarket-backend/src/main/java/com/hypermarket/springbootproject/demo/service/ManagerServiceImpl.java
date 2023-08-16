@@ -1,19 +1,30 @@
 package com.hypermarket.springbootproject.demo.service;
 
 
+import com.hypermarket.springbootproject.demo.entity.Department;
+import com.hypermarket.springbootproject.demo.entity.Employee;
 import com.hypermarket.springbootproject.demo.entity.Manager;
+import com.hypermarket.springbootproject.demo.repository.DepartmentRepository;
+import com.hypermarket.springbootproject.demo.repository.EmployeeRepository;
 import com.hypermarket.springbootproject.demo.repository.ManagerRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
     private final ManagerRepository managerRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public ManagerServiceImpl(ManagerRepository managerRepository) {
+    private final DepartmentRepository departmentRepository;
+
+
+    public ManagerServiceImpl(ManagerRepository managerRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.managerRepository = managerRepository;
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -33,14 +44,15 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<Manager> getManagersByDepartmentId(int departmentId) {
-
-        //TODO: implement Department table, and get the manager From DepartmentRepository
-
-//        return managerRepository.findByDepartmentId(departmentId);
+    public Department getManagerByDepartmentId(int managerId) {
+        List<Department> all = departmentRepository.findAll();
+        for (Department department : all) {
+            if(department.getManagerId() == managerId){
+                return department;
+            }
+        }
 
         return null;
-
     }
 
     @Override
@@ -55,5 +67,19 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteManager(int managerId) {
         managerRepository.deleteById(managerId);
+    }
+
+    @Override
+    public List<Employee> getAllEmployees(int managerId) {
+        List<Employee> employeesFromSpecificManager = new ArrayList<>();
+        List<Employee> all = employeeRepository.findAll();
+
+        for (Employee employee : all) {
+            if(employee.getManagerId() == managerId){
+                employeesFromSpecificManager.add(employee);
+            }
+        }
+
+        return employeesFromSpecificManager;
     }
 }

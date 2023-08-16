@@ -32,4 +32,6 @@ public class Employee {
 
     @Column(name = "contact_info")
     private String contact;
+
+
 }

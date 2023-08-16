@@ -15,7 +15,7 @@ public interface DepartmentService {
     Manager getDepartmentManager(int departmentId);
 
 
-    Department updateDepartment(int departmentId, Department updatedDepartment);
+    Department updateDepartment(Department updatedDepartment, int departmentId);
 
     void deleteDepartment(int departmentId);
 }

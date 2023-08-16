@@ -1,13 +1,12 @@
 package com.hypermarket.springbootproject.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -29,4 +28,5 @@ public class Manager {
 
     @Column(name = "contact_info")
     private String contact;
+
 }
