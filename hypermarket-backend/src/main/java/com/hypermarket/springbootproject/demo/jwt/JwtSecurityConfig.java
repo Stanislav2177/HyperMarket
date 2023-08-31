@@ -58,9 +58,8 @@ public class JwtSecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/swagger-ui.html",
-                                "/api/employees"
+                                "/users/register"
                         ).permitAll()
-//                        .requestMatchers(PathRequest.toH2Console()).permitAll() // h2-console is a servlet and NOT recommended for a production
                         .requestMatchers(HttpMethod.OPTIONS, "/**")
                         .permitAll()
                         .anyRequest()
@@ -87,18 +86,7 @@ public class JwtSecurityConfig {
         return new ProviderManager(authenticationProvider);
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("stan")
-                .password("{noop}stan")
-                .authorities("read")
-                .roles("USER")
-                .build();
 
-
-
-        return new InMemoryUserDetailsManager(user);
-    }
 
     @Bean
     public JWKSource<SecurityContext> jwkSource() {

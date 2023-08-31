@@ -4,9 +4,11 @@ package com.hypermarket.springbootproject.demo.service;
 import com.hypermarket.springbootproject.demo.entity.Department;
 import com.hypermarket.springbootproject.demo.entity.Employee;
 import com.hypermarket.springbootproject.demo.entity.Manager;
+import com.hypermarket.springbootproject.demo.exception.ManagerNotFoundException;
 import com.hypermarket.springbootproject.demo.repository.DepartmentRepository;
 import com.hypermarket.springbootproject.demo.repository.EmployeeRepository;
 import com.hypermarket.springbootproject.demo.repository.ManagerRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,9 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Manager getManagerById(int managerId) throws ChangeSetPersister.NotFoundException {
+    public Manager getManagerById(int managerId) {
         return managerRepository.findById(managerId)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new);
+                .orElseThrow(() -> new ManagerNotFoundException("Manager not found with ID: " + managerId));
     }
 
     @Override
@@ -47,26 +49,34 @@ public class ManagerServiceImpl implements ManagerService {
     public Department getManagerByDepartmentId(int managerId) {
         List<Department> all = departmentRepository.findAll();
         for (Department department : all) {
-            if(department.getManagerId() == managerId){
+            if (department.getManagerId() == managerId) {
                 return department;
             }
         }
 
-        return null;
+        throw new ManagerNotFoundException("Manager not found for department with ID: " + managerId);
     }
 
     @Override
-    public Manager updateManager(int managerId, Manager updatedManager) throws ChangeSetPersister.NotFoundException {
-        Manager existingManager = getManagerById(managerId);
-        existingManager.setManagerName(updatedManager.getManagerName());
-        existingManager.setContact(updatedManager.getContact());
-        existingManager.setDepartmentId(updatedManager.getDepartmentId());
-        return managerRepository.save(existingManager);
+    public Manager updateManager(int managerId, Manager updatedManager) {
+        try {
+            Manager existingManager = getManagerById(managerId);
+            existingManager.setManagerName(updatedManager.getManagerName());
+            existingManager.setContact(updatedManager.getContact());
+            existingManager.setDepartmentId(updatedManager.getDepartmentId());
+            return managerRepository.save(existingManager);
+        } catch (ManagerNotFoundException ex) {
+            throw new RuntimeException("Failed to update manager: " + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public void deleteManager(int managerId) {
-        managerRepository.deleteById(managerId);
+        try {
+            managerRepository.deleteById(managerId);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new ManagerNotFoundException("Manager not found with ID: " + managerId);
+        }
     }
 
     @Override
@@ -75,9 +85,13 @@ public class ManagerServiceImpl implements ManagerService {
         List<Employee> all = employeeRepository.findAll();
 
         for (Employee employee : all) {
-            if(employee.getManagerId() == managerId){
+            if (employee.getManagerId() == managerId) {
                 employeesFromSpecificManager.add(employee);
             }
+        }
+
+        if (employeesFromSpecificManager.isEmpty()) {
+            throw new ManagerNotFoundException("No employees found for manager with ID: " + managerId);
         }
 
         return employeesFromSpecificManager;
