@@ -33,14 +33,24 @@ public class EmployeeServiceImpl implements EmployeeService{
         try{
             Employee existingEmployee = getSpecificEmployee(oldEmpId);
 
-            deleteEmployee(oldEmpId);
-
-            existingEmployee.setEmployeeId(updatedEmp.getEmployeeId());
+            existingEmployee.setEmployeeId(oldEmpId);
             existingEmployee.setEmployeeName(updatedEmp.getEmployeeName());
             existingEmployee.setContact(updatedEmp.getContact());
-            existingEmployee.setPosition(updatedEmp.getPosition());
-            existingEmployee.setDepartmentId(updatedEmp.getDepartmentId());
-            existingEmployee.setManagerId(updatedEmp.getManagerId());
+
+
+            String updatedPosition = updatedEmp.getPosition();
+            int fixedDepId = existingEmployee.getDepartmentId();
+            int fixedManId = existingEmployee.getManagerId();
+
+            if(!existingEmployee.getPosition().equals(updatedPosition)){
+                Result result = getResult(updatedPosition, fixedDepId, fixedManId);
+                fixedManId = result.managerId;
+                fixedDepId = result.departmentId;
+            }
+
+            existingEmployee.setPosition(updatedPosition);
+            existingEmployee.setDepartmentId(fixedDepId);
+            existingEmployee.setManagerId(fixedManId);
 
             employeeRepository.save(existingEmployee);
 
@@ -65,11 +75,17 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employee;
     }
 
-
     private Employee createEmployee(String name, String position, String contact) {
         int departmentId = 0;
         int managerId = 0;
 
+        Result result = getResult(position, departmentId, managerId);
+        Employee employee = new Employee(0,name, position, result.departmentId(), result.managerId(), contact);
+
+        return employee;
+    }
+
+    private static Result getResult(String position, int departmentId, int managerId) {
         switch (position) {
             case "Seller" -> {
                 departmentId = 1;
@@ -84,8 +100,10 @@ public class EmployeeServiceImpl implements EmployeeService{
                 managerId = 3;
             }
         }
-        Employee employee = new Employee(0,name, position, departmentId, managerId, contact);
+        Result result = new Result(departmentId, managerId);
+        return result;
+    }
 
-        return employee;
+    private record Result(int departmentId, int managerId) {
     }
 }

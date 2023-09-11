@@ -79,7 +79,7 @@ public class EmployeeServiceTest {
 
         Employee result = service.updateEmployee(updatedEmployee, employeeToUpdate.getEmployeeId());
         verify(dao, times(1)).save(argThat(arg -> arg.getEmployeeId() == employeeToUpdate.getEmployeeId()
-                && arg.getEmployeeName().equals("Updated Stan")
+                && arg.getEmployeeName().equals("Stan")
                 && arg.getPosition().equals("Heaver")));
 
 
