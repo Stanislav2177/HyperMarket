@@ -1,6 +1,7 @@
 package com.hypermarket.springbootproject.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
@@ -31,6 +33,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @NotBlank
     @Column(name = "username")
     private String username;
 

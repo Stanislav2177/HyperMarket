@@ -1,20 +1,19 @@
 package com.hypermarket.springbootproject.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Table(name = "employees")
 public class Employee {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private int employeeId;
 
@@ -34,4 +33,11 @@ public class Employee {
     private String contact;
 
 
+    public Employee(String employeeName, String position, int departmentId, int managerId, String contact) {
+        this.employeeName = employeeName;
+        this.position = position;
+        this.departmentId = departmentId;
+        this.managerId = managerId;
+        this.contact = contact;
+    }
 }

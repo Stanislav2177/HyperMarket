@@ -30,6 +30,13 @@ public class UserService implements UserDetailsService {
         this.modelMapper = new ModelMapper();
     }
 
+    public UserDtoResponse getUserById(int id){
+        User user = userRepository.findById((long) id)
+                .orElseThrow(() -> new UserDoesNotExistException(USER_DOES_NOT_EXIST));
+
+        return modelMapper.map(user, UserDtoResponse.class);
+    }
+
     public UserDtoResponse getUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserDoesNotExistException(USER_DOES_NOT_EXIST));

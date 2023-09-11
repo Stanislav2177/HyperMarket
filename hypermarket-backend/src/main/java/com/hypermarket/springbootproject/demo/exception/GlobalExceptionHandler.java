@@ -13,7 +13,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ManagerNotFoundException.class,
             ProductNotFoundException.class,
-            ProductOutOfStock.class
+            ProductOutOfStock.class,
+            EmployeeNotFoundException.class,
+            UserDoesNotExistException.class,
+            UserWithGivenEmailAlreadyExistsException.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse();

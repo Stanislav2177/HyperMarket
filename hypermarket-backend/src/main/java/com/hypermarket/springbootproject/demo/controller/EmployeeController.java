@@ -30,13 +30,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
         Employee employee = employeeService.getSpecificEmployee(id);
 
-        int employeeId = employee.getEmployeeId();
-        employeeId--;
-        employee.setEmployeeId(employeeId);
 
-        if (employee == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(employee);
     }
 
@@ -44,6 +38,12 @@ public class EmployeeController {
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         Employee createdEmployee = employeeService.saveEmployee(employee.getEmployeeName(), employee.getPosition(), employee.getContact());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+        Employee updatedEmployee = employeeService.updateEmployee(employee, employee.getEmployeeId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedEmployee);
     }
 
     @DeleteMapping("/{id}")
