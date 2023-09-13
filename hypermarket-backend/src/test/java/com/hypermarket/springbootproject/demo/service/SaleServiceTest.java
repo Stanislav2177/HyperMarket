@@ -27,18 +27,11 @@ public class SaleServiceTest {
         CombinedDto originalDto = new CombinedDto();
         originalDto.setProductId(1);
         originalDto.setProductName("Test Product");
-        originalDto.setContactInfo("something");
 
-        System.out.println(originalDto.getContactInfo());
-        // Set other properties...
-
-        // Serialize to JSON
         String json = objectMapper.writeValueAsString(originalDto);
 
-        // Deserialize back to CombinedDto
         CombinedDto deserializedDto = objectMapper.readValue(json, CombinedDto.class);
 
-        // Compare the original and deserialized objects
         assertEquals(originalDto, deserializedDto);
     }
 

@@ -46,5 +46,5 @@ public class CombinedDto {
     private String manufacturerName;
 
     private String country;
-    
+
 }

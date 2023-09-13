@@ -97,7 +97,6 @@ public class EmployeeServiceTest {
 
     @Test
     public void testUpdateEmployeeSuccess() {
-        // Create a sample employee and a mock result
         Employee existingEmployee = service.saveEmployee("Stan", "Seller", null);
         Employee updatedEmployee = new Employee( "Stan NEW",
                 "Heaver", 3, 3, null);
@@ -106,15 +105,13 @@ public class EmployeeServiceTest {
         when(dao.save(existingEmployee)).thenReturn(updatedEmployee);
 
 
-        // Call the updateEmployee method
         Employee result = service.updateEmployee(updatedEmployee, 1);
 
         System.out.println(result);
-        // Verify that the repository methods were called with the correct arguments
+
         verify(dao, times(1)).findById(1);
         verify(dao, times(2)).save(existingEmployee);
 
-        // Assert that the result matches the updatedEmployee
         assertEquals(updatedEmployee, result);
     }
 
