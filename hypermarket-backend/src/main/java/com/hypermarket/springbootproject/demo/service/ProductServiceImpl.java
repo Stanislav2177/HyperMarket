@@ -68,7 +68,6 @@ public class ProductServiceImpl implements ProductService{
                 .quantity(product.getQuantity())
                 .build();
 
-
         saleService.saveSale(sale);
 
         return product;

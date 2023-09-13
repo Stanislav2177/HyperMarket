@@ -1,5 +1,6 @@
 package com.hypermarket.springbootproject.demo.service;
 
+import com.hypermarket.springbootproject.demo.exception.SaleNoteInfoException;
 import com.hypermarket.springbootproject.demo.repository.CombinedDtoRepository;
 import com.hypermarket.springbootproject.demo.dto.CombinedDto;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,25 @@ public class CombinedDtoServiceImpl implements CombinedDtoService {
     }
 
     public List<CombinedDto> getProductSaleEmployeeManufacturerInfo() {
-        List<CombinedDto> productSaleEmployeeManufacturerInfo = repository.getProductSaleEmployeeManufacturerInfo();
-        System.out.println(productSaleEmployeeManufacturerInfo.toString());
+        try {
+            List<CombinedDto> saleNotes = repository.getProductSaleEmployeeManufacturerInfo();
 
-        return productSaleEmployeeManufacturerInfo;
+            if(!saleNotes.isEmpty()){
+                return saleNotes;
+            }else {
+                throw new SaleNoteInfoException("There is no sale notes");
+            }
+        }catch (Exception e){
+            throw new SaleNoteInfoException("Problem getting the sales note");
+        }
+
     }
 
     public List<CombinedDto> getProductSaleEmployeeManufacturerInfo(int productId) {
-        return repository.getProductSaleEmployeeManufacturerInfo(productId);
+        try {
+            return repository.getProductSaleEmployeeManufacturerInfo(productId);
+        }catch (Exception e){
+            throw new SaleNoteInfoException("Problem getting the sale note" + productId);
+        }
     }
-
 }

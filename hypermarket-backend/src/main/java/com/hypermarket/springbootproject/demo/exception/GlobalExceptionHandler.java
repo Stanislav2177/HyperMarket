@@ -16,7 +16,10 @@ public class GlobalExceptionHandler {
             ProductOutOfStock.class,
             EmployeeNotFoundException.class,
             UserDoesNotExistException.class,
-            UserWithGivenEmailAlreadyExistsException.class
+            UserWithGivenEmailAlreadyExistsException.class,
+            RuntimeException.class,
+            ManufacturerNotFoundException.class,
+            SaleNoteInfoException.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse();
