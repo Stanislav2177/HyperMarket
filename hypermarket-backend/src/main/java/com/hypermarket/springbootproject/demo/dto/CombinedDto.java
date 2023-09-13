@@ -1,10 +1,8 @@
 package com.hypermarket.springbootproject.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import lombok.*;
 
 import java.sql.Time;
 import java.util.Date;
@@ -12,6 +10,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class CombinedDto {
     private int productId;
@@ -39,13 +39,12 @@ public class CombinedDto {
 
     private String employeeName;
 
-    private String employeePosition;
+    private String position;
 
     private int manufacturerId;
 
     private String manufacturerName;
 
     private String country;
-
-    private String contactInfo;
+    
 }

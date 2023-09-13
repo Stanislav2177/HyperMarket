@@ -33,27 +33,21 @@ public class EmployeeServiceImpl implements EmployeeService{
         try{
             Employee existingEmployee = getSpecificEmployee(oldEmpId);
 
-            existingEmployee.setEmployeeId(oldEmpId);
+//            existingEmployee.setEmployeeId(oldEmpId);
             existingEmployee.setEmployeeName(updatedEmp.getEmployeeName());
             existingEmployee.setContact(updatedEmp.getContact());
 
 
             String updatedPosition = updatedEmp.getPosition();
-            int fixedDepId = existingEmployee.getDepartmentId();
-            int fixedManId = existingEmployee.getManagerId();
 
-            if(!existingEmployee.getPosition().equals(updatedPosition)){
-                Result result = getResult(updatedPosition, fixedDepId, fixedManId);
-                fixedManId = result.managerId;
-                fixedDepId = result.departmentId;
+            if (!existingEmployee.getPosition().equals(updatedPosition)) {
+                Result result = getResult(updatedPosition, existingEmployee.getDepartmentId(), existingEmployee.getManagerId());
+                existingEmployee.setPosition(updatedPosition);
+                existingEmployee.setDepartmentId(result.departmentId());
+                existingEmployee.setManagerId(result.managerId());
             }
 
-            existingEmployee.setPosition(updatedPosition);
-            existingEmployee.setDepartmentId(fixedDepId);
-            existingEmployee.setManagerId(fixedManId);
-
             employeeRepository.save(existingEmployee);
-
             return existingEmployee;
         }catch (EmployeeNotFoundException ex){
             throw new EmployeeNotFoundException("Failed to update updatedEmp : " + ex.getMessage());
