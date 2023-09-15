@@ -58,7 +58,7 @@ public class JwtSecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/swagger-ui.html",
-                                "/users/register",
+                                "/api/users/register",
                                 "/log-info"
                         ).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**")

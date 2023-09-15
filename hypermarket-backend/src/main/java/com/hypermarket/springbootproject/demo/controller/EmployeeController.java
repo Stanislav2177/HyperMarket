@@ -36,13 +36,17 @@ public class EmployeeController {
 
     @PostMapping("/post")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = employeeService.saveEmployee(employee.getEmployeeName(), employee.getPosition(), employee.getContact());
+        Employee createdEmployee = employeeService
+                .saveEmployee(employee.getEmployeeName(), employee.getPosition(), employee.getContact());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
     @PostMapping("/update")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
-        Employee updatedEmployee = employeeService.updateEmployee(employee, employee.getEmployeeId());
+        Employee updatedEmployee = employeeService
+                .updateEmployee(employee, employee.getEmployeeId());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedEmployee);
     }
 

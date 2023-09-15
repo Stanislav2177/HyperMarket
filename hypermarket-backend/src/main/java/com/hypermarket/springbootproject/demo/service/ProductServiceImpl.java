@@ -49,7 +49,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product createProduct(String productName, double price, int manufacturerId, int quantity) {
-        Product product = new Product( 0,productName, price, new Date(), manufacturerId, quantity);
+        Product product = new Product( 0,productName,
+                price, new Date(), manufacturerId, quantity);
 
         productRepository.save(product);
 
@@ -86,7 +87,6 @@ public class ProductServiceImpl implements ProductService{
             oldProduct.setExpiryDate(newProduct.getExpiryDate());
             oldProduct.setManufacturerId(newProduct.getManufacturerId());
 
-
             productRepository.save(oldProduct);
 
             return oldProduct;
@@ -107,7 +107,6 @@ public class ProductServiceImpl implements ProductService{
                         return manufacturer;
                     }
                 }
-
             }
         }
         return null;

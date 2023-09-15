@@ -41,7 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService{
             String updatedPosition = updatedEmp.getPosition();
 
             if (!existingEmployee.getPosition().equals(updatedPosition)) {
-                Result result = getResult(updatedPosition, existingEmployee.getDepartmentId(), existingEmployee.getManagerId());
+                Result result = getResult(updatedPosition,
+                        existingEmployee.getDepartmentId(), existingEmployee.getManagerId());
+
                 existingEmployee.setPosition(updatedPosition);
                 existingEmployee.setDepartmentId(result.departmentId());
                 existingEmployee.setManagerId(result.managerId());
@@ -74,7 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         int managerId = 0;
 
         Result result = getResult(position, departmentId, managerId);
-        Employee employee = new Employee(0,name, position, result.departmentId(), result.managerId(), contact);
+        Employee employee = new Employee(0,name,
+                position, result.departmentId(), result.managerId(), contact);
 
         return employee;
     }

@@ -69,33 +69,6 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void testUpdateEmployee(){
-        Employee employeeToUpdate = service.saveEmployee("Stan", "Seller", null);
-        employeeToUpdate.setEmployeeId(1);
-
-
-        Employee updatedEmployee = new Employee( "Stan",
-                "Heaver", 3, 3, null);
-        updatedEmployee.setEmployeeId(1);
-
-        when(dao.save(any(Employee.class))).thenReturn(updatedEmployee);
-
-        Employee result = service.updateEmployee(updatedEmployee, employeeToUpdate.getEmployeeId());
-
-
-        assertEquals(updatedEmployee.getEmployeeId(), result.getEmployeeId());
-        assertEquals(updatedEmployee.getEmployeeName(), result.getEmployeeName());
-        assertEquals(updatedEmployee.getPosition(), result.getPosition());
-        assertEquals(updatedEmployee.getDepartmentId(), result.getDepartmentId());
-        assertEquals(updatedEmployee.getManagerId(), result.getManagerId());
-
-        verify(dao, times(1)).save(argThat(arg -> arg.getEmployeeId() == employeeToUpdate.getEmployeeId()
-                && arg.getEmployeeName().equals("Stan")
-                && arg.getPosition().equals("Heaver")));
-
-    }
-
-    @Test
     public void testUpdateEmployeeSuccess() {
         Employee existingEmployee = service.saveEmployee("Stan", "Seller", null);
         Employee updatedEmployee = new Employee( "Stan NEW",

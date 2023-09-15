@@ -21,7 +21,8 @@ public class ManufacturerController {
 
     @PostMapping("/post")
     public ResponseEntity<Manufacturer> saveManufacturer(@RequestBody Manufacturer manufacturer){
-        Manufacturer manufacturer1 = manufacturerService.saveManufacturer(manufacturer);
+        Manufacturer manufacturer1 = manufacturerService
+                .saveManufacturer(manufacturer);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(manufacturer1);
     }
@@ -34,7 +35,8 @@ public class ManufacturerController {
 
     @PostMapping("/update")
     public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturer, int id){
-        return ResponseEntity.ok(manufacturerService.updateManufacturer(manufacturer, id));
+        return ResponseEntity.ok(manufacturerService
+                .updateManufacturer(manufacturer, id));
     }
 
     @DeleteMapping("/delete/{id}")

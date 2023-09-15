@@ -64,6 +64,7 @@ public class ManagerServiceImpl implements ManagerService {
             existingManager.setManagerName(updatedManager.getManagerName());
             existingManager.setContact(updatedManager.getContact());
             existingManager.setDepartmentId(updatedManager.getDepartmentId());
+
             return managerRepository.save(existingManager);
         } catch (ManagerNotFoundException ex) {
             throw new RuntimeException("Failed to update manager: " + ex.getMessage(), ex);

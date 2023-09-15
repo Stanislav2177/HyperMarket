@@ -18,7 +18,8 @@ public class ProductController {
     private final CombinedDtoServiceImpl productSaleEmployeeManufacturerService;
 
     @Autowired
-    public ProductController(ProductService productService, CombinedDtoServiceImpl productSaleEmployeeManufacturerService) {
+    public ProductController(ProductService productService,
+                             CombinedDtoServiceImpl productSaleEmployeeManufacturerService) {
         this.productService = productService;
         this.productSaleEmployeeManufacturerService = productSaleEmployeeManufacturerService;
     }
@@ -53,6 +54,7 @@ public class ProductController {
     public ResponseEntity<Product> saleProduct(@RequestParam int productId,
                                                @RequestParam int quantity,
                                                @RequestParam int employeeId){
+
         productService.sellProduct(productId, quantity, employeeId);
         Product specificProduct = productService.getSpecificProduct(productId);
 

@@ -62,6 +62,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     public Manufacturer getSpecificManufacturer(int id) {
         try {
             Optional<Manufacturer> manufacturerOptional = manufacturerRepository.findById(id);
+
             if (manufacturerOptional.isPresent()) {
                 return manufacturerOptional.get();
             } else {
